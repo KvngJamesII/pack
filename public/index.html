@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Termux SSH</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main Terminal Screen -->
+    <div class="termux-app" id="termuxApp">
+        <!-- Top Status Bar -->
+        <div class="termux-statusbar">
+            <div class="status-left">
+                <button class="status-btn" id="menuBtn">☰</button>
+                <span class="session-name" id="sessionName">~</span>
+            </div>
+            <div class="status-center">
+                <span class="connection-indicator" id="connIndicator"></span>
+                <span class="status-text" id="statusText">Disconnected</span>
+            </div>
+            <div class="status-right">
+                <button class="status-btn danger" id="disconnectBtn">✕</button>
+            </div>
+        </div>
+
+        <!-- Terminal Area -->
+        <div class="termux-terminal-wrapper">
+            <div id="terminal"></div>
+        </div>
+
+        <!-- Mobile Shortcut Bar -->
+        <div class="termux-shortcuts" id="shortcutsBar">
+            <!-- Action Row -->
+            <div class="shortcuts-row actions">
+                <button class="shortcut-btn action" id="pasteBtn">📋 PASTE</button>
+                <button class="shortcut-btn action" id="copyBtn">📑 COPY</button>
+                <button class="shortcut-btn action delete" data-key="Backspace">⌫ DEL</button>
+                <button class="shortcut-btn action" id="clearBtn">🗑️ CLEAR</button>
+                <button class="shortcut-btn action" id="selectAllBtn">☑️ SELECT</button>
+            </div>
+            <!-- CTRL Row -->
+            <div class="shortcuts-row primary">
+                <button class="shortcut-btn ctrl" data-key="c" data-ctrl="true">^C</button>
+                <button class="shortcut-btn ctrl" data-key="d" data-ctrl="true">^D</button>
+                <button class="shortcut-btn ctrl" data-key="z" data-ctrl="true">^Z</button>
+                <button class="shortcut-btn ctrl" data-key="l" data-ctrl="true">^L</button>
+                <button class="shortcut-btn ctrl" data-key="a" data-ctrl="true">^A</button>
+                <button class="shortcut-btn ctrl" data-key="e" data-ctrl="true">^E</button>
+                <button class="shortcut-btn ctrl" data-key="u" data-ctrl="true">^U</button>
+                <button class="shortcut-btn ctrl" data-key="k" data-ctrl="true">^K</button>
+                <button class="shortcut-btn ctrl" data-key="w" data-ctrl="true">^W</button>
+                <button class="shortcut-btn ctrl" data-key="r" data-ctrl="true">^R</button>
+            </div>
+            <!-- Navigation Row -->
+            <div class="shortcuts-row secondary">
+                <button class="shortcut-btn nav" data-key="Tab">TAB</button>
+                <button class="shortcut-btn nav" data-key="Escape">ESC</button>
+                <button class="shortcut-btn arrow" data-key="ArrowUp">▲</button>
+                <button class="shortcut-btn arrow" data-key="ArrowDown">▼</button>
+                <button class="shortcut-btn arrow" data-key="ArrowLeft">◀</button>
+                <button class="shortcut-btn arrow" data-key="ArrowRight">▶</button>
+                <button class="shortcut-btn nav" data-key="Home">HOME</button>
+                <button class="shortcut-btn nav" data-key="End">END</button>
+                <button class="shortcut-btn nav" data-key="PageUp">PgUp</button>
+                <button class="shortcut-btn nav" data-key="PageDown">PgDn</button>
+            </div>
+            <!-- Symbols Row -->
+            <div class="shortcuts-row tertiary">
+                <button class="shortcut-btn symbol" data-insert="/">/</button>
+                <button class="shortcut-btn symbol" data-insert="\">\\</button>
+                <button class="shortcut-btn symbol" data-insert="|">|</button>
+                <button class="shortcut-btn symbol" data-insert="&">&amp;</button>
+                <button class="shortcut-btn symbol" data-insert="~">~</button>
+                <button class="shortcut-btn symbol" data-insert="-">-</button>
+                <button class="shortcut-btn symbol" data-insert="_">_</button>
+                <button class="shortcut-btn symbol" data-insert="=">=</button>
+                <button class="shortcut-btn symbol" data-insert='"'>"</button>
+                <button class="shortcut-btn symbol" data-insert="'">'</button>
+                <button class="shortcut-btn symbol" data-insert="`">`</button>
+                <button class="shortcut-btn symbol" data-insert="$">$</button>
+                <button class="shortcut-btn symbol" data-insert="#">#</button>
+                <button class="shortcut-btn symbol" data-insert="@">@</button>
+                <button class="shortcut-btn symbol" data-insert=";">;</button>
+                <button class="shortcut-btn symbol" data-insert=":">:</button>
+                <button class="shortcut-btn symbol" data-insert="*">*</button>
+                <button class="shortcut-btn symbol" data-insert="?">?</button>
+                <button class="shortcut-btn symbol" data-insert="<">&lt;</button>
+                <button class="shortcut-btn symbol" data-insert=">">&gt;</button>
+            </div>
+            <!-- Brackets Row -->
+            <div class="shortcuts-row quaternary">
+                <button class="shortcut-btn bracket" data-insert="(">(</button>
+                <button class="shortcut-btn bracket" data-insert=")">)</button>
+                <button class="shortcut-btn bracket" data-insert="[">[</button>
+                <button class="shortcut-btn bracket" data-insert="]">]</button>
+                <button class="shortcut-btn bracket" data-insert="{">{</button>
+                <button class="shortcut-btn bracket" data-insert="}">}</button>
+                <button class="shortcut-btn symbol" data-insert="!">!</button>
+                <button class="shortcut-btn symbol" data-insert="%">%</button>
+                <button class="shortcut-btn symbol" data-insert="^">^</button>
+                <button class="shortcut-btn symbol" data-insert="+">+</button>
+            </div>
+        </div>
+
+        <!-- Side Drawer -->
+        <div class="drawer-overlay" id="drawerOverlay"></div>
+        <div class="termux-drawer" id="drawer">
+            <div class="drawer-header">
+                <span class="drawer-title">$ menu</span>
+                <button class="drawer-close" id="drawerClose">✕</button>
+            </div>
+
+            <!-- Upload Section -->
+            <div class="drawer-section">
+                <div class="section-title">
+                    <span class="icon">📁</span> File Upload
+                </div>
+                <div class="upload-zone" id="uploadZone">
+                    <input type="file" id="fileInput" hidden>
+                    <div class="upload-content">
+                        <span class="upload-icon">⬆</span>
+                        <span>Tap to upload file</span>
+                    </div>
+                </div>
+                <div class="upload-progress hidden" id="uploadProgress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">Uploading...</span>
+                </div>
+                <div class="remote-path-input hidden" id="remotePathSection">
+                    <input type="text" id="remotePath" placeholder="/root/filename">
+                    <button class="termux-btn-small" id="sftpUploadBtn">Send to VPS</button>
+                </div>
+            </div>
+
+            <!-- Quick Commands -->
+            <div class="drawer-section">
+                <div class="section-title">
+                    <span class="icon">⚡</span> Quick Commands
+                </div>
+                <div class="quick-cmd-grid">
+                    <button class="quick-cmd" data-cmd="ls -la">ls -la</button>
+                    <button class="quick-cmd" data-cmd="pwd">pwd</button>
+                    <button class="quick-cmd" data-cmd="cd ~">cd ~</button>
+                    <button class="quick-cmd" data-cmd="clear">clear</button>
+                    <button class="quick-cmd" data-cmd="df -h">df -h</button>
+                    <button class="quick-cmd" data-cmd="free -m">free -m</button>
+                    <button class="quick-cmd" data-cmd="top">top</button>
+                    <button class="quick-cmd" data-cmd="htop">htop</button>
+                    <button class="quick-cmd" data-cmd="ps aux">ps aux</button>
+                    <button class="quick-cmd" data-cmd="netstat -tulpn">netstat</button>
+                    <button class="quick-cmd" data-cmd="uname -a">uname -a</button>
+                    <button class="quick-cmd" data-cmd="uptime">uptime</button>
+                </div>
+            </div>
+
+            <!-- Session Actions -->
+            <div class="drawer-section">
+                <div class="section-title">
+                    <span class="icon">🔗</span> Session
+                </div>
+                <div class="session-actions">
+                    <button class="session-action-btn" id="reconnectBtn">
+                        <span class="icon">🔄</span> Reconnect
+                    </button>
+                    <button class="session-action-btn" id="newSessionBtn">
+                        <span class="icon">➕</span> New Session
+                    </button>
+                    <button class="session-action-btn danger" id="killSessionBtn">
+                        <span class="icon">💀</span> Kill Session
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="termux-toast" id="toast"></div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.9.0/lib/xterm-addon-web-links.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

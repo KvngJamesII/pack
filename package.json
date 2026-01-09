@@ -1,0 +1,23 @@
+{
+  "name": "termux-ssh-web",
+  "version": "1.0.0",
+  "description": "Web-based SSH terminal with Termux-style UI",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.7.2",
+    "ssh2": "^1.15.0"
+  },
+  "keywords": ["ssh", "terminal", "web", "termux"],
+  "author": "",
+  "license": "ISC"
+}

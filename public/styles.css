@@ -1,0 +1,989 @@
+/* Termux-Style CSS - Mobile First Design */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    /* Termux Colors */
+    --bg-black: #000000;
+    --bg-dark: #111111;
+    --bg-panel: #1a1a1a;
+    --bg-input: #0d0d0d;
+    --bg-hover: #222222;
+    --bg-active: #333333;
+    
+    /* Terminal Colors */
+    --term-green: #50fa7b;
+    --term-green-dim: #2d8a47;
+    --term-red: #ff5555;
+    --term-yellow: #f1fa8c;
+    --term-blue: #8be9fd;
+    --term-purple: #bd93f9;
+    --term-orange: #ffb86c;
+    --term-white: #f8f8f2;
+    --term-gray: #6272a4;
+    --term-dim: #44475a;
+    
+    /* UI */
+    --border-color: #333333;
+    --text-primary: #f8f8f2;
+    --text-secondary: #888888;
+    --text-muted: #555555;
+    
+    /* Safe areas for notched phones */
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Fira Code', 'SF Mono', 'Roboto Mono', 'Consolas', monospace;
+    background: var(--bg-black);
+    color: var(--text-primary);
+    overflow: hidden;
+    touch-action: manipulation;
+    font-size: 14px;
+}
+
+/* ============================================
+   LOGIN SCREEN - Termux Style
+============================================ */
+.termux-login {
+    height: 100%;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-black);
+    padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+    overflow-y: auto;
+}
+
+.termux-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-dark);
+}
+
+.termux-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--term-green);
+}
+
+.termux-icon {
+    background: var(--term-green);
+    color: var(--bg-black);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.termux-welcome {
+    padding: 20px 16px;
+    text-align: center;
+}
+
+.ascii-art {
+    font-size: 0.5rem;
+    color: var(--term-green);
+    line-height: 1.2;
+    overflow-x: auto;
+    white-space: pre;
+    margin-bottom: 12px;
+}
+
+@media (min-width: 400px) {
+    .ascii-art {
+        font-size: 0.6rem;
+    }
+}
+
+.welcome-text {
+    color: var(--term-gray);
+    font-size: 0.85rem;
+}
+
+/* Start Container */
+.start-container {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.server-info-box {
+    width: 100%;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: var(--term-green);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.info-value {
+    color: var(--term-blue);
+    font-size: 0.9rem;
+}
+
+.info-value.ready {
+    color: var(--term-green);
+}
+
+.info-value.connecting {
+    color: var(--term-yellow);
+}
+
+.info-value.error {
+    color: var(--term-red);
+}
+
+/* Start Button */
+.termux-btn-start {
+    width: 100%;
+    padding: 20px 32px;
+    background: var(--term-green);
+    border: none;
+    border-radius: 12px;
+    color: var(--bg-black);
+    font-family: inherit;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(80, 250, 123, 0.3);
+}
+
+.termux-btn-start:hover {
+    background: #6dff96;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(80, 250, 123, 0.4);
+}
+
+.termux-btn-start:active {
+    transform: scale(0.98);
+}
+
+.termux-btn-start:disabled {
+    background: var(--term-green-dim);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.termux-btn-start .btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.termux-btn-start .start-icon {
+    font-size: 1.1rem;
+}
+
+.tap-hint {
+    margin-top: 16px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* ============================================
+   MAIN TERMINAL APP
+============================================ */
+.termux-app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    height: 100dvh;
+    background: var(--bg-black);
+}
+
+.termux-app.hidden {
+    display: none;
+}
+
+/* Status Bar */
+.termux-statusbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    padding-top: calc(8px + var(--safe-top));
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--border-color);
+    min-height: 44px;
+    gap: 8px;
+}
+
+.status-left, .status-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-center {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    justify-content: center;
+}
+
+.status-btn {
+    padding: 8px 12px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.status-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--term-green);
+}
+
+.status-btn:active {
+    background: var(--bg-active);
+    transform: scale(0.95);
+}
+
+.status-btn.danger {
+    border-color: var(--term-red);
+    color: var(--term-red);
+}
+
+.status-btn.danger:hover {
+    background: var(--term-red);
+    color: var(--bg-black);
+}
+
+.session-name {
+    color: var(--term-green);
+    font-size: 0.85rem;
+    font-weight: 500;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.connection-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--term-red);
+}
+
+.connection-indicator.connected {
+    background: var(--term-green);
+    box-shadow: 0 0 8px var(--term-green);
+}
+
+.connection-indicator.connecting {
+    background: var(--term-yellow);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.status-text {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Terminal Wrapper */
+.termux-terminal-wrapper {
+    flex: 1;
+    background: var(--bg-black);
+    overflow: hidden;
+    position: relative;
+}
+
+#terminal {
+    height: 100%;
+    width: 100%;
+}
+
+/* xterm customization */
+.xterm {
+    padding: 4px 8px;
+    height: 100%;
+}
+
+.xterm-viewport {
+    overflow-y: auto !important;
+}
+
+.xterm-viewport::-webkit-scrollbar {
+    width: 6px;
+}
+
+.xterm-viewport::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.xterm-viewport::-webkit-scrollbar-thumb {
+    background: var(--bg-active);
+    border-radius: 3px;
+}
+
+/* ============================================
+   MOBILE SHORTCUTS BAR
+============================================ */
+.termux-shortcuts {
+    background: var(--bg-dark);
+    border-top: 1px solid var(--border-color);
+    padding: 4px 6px;
+    padding-bottom: calc(4px + var(--safe-bottom));
+    max-height: 45vh;
+    overflow-y: auto;
+}
+
+.shortcuts-row {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    padding: 3px 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.shortcuts-row::-webkit-scrollbar {
+    display: none;
+}
+
+.shortcuts-row.actions {
+    border-bottom: 2px solid var(--term-green);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+}
+
+.shortcuts-row.primary {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 6px;
+    margin-bottom: 3px;
+}
+
+.shortcut-btn {
+    flex-shrink: 0;
+    padding: 8px 10px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.1s;
+    min-width: 36px;
+    text-align: center;
+}
+
+.shortcut-btn:active {
+    background: var(--term-green);
+    color: var(--bg-black);
+    border-color: var(--term-green);
+    transform: scale(0.95);
+}
+
+/* Action Buttons */
+.shortcut-btn.action {
+    background: linear-gradient(135deg, var(--bg-active) 0%, var(--bg-panel) 100%);
+    color: var(--term-green);
+    border-color: var(--term-green);
+    padding: 10px 12px;
+    font-size: 0.7rem;
+    min-width: 60px;
+}
+
+.shortcut-btn.action:active {
+    background: var(--term-green);
+    color: var(--bg-black);
+}
+
+.shortcut-btn.action.delete {
+    color: var(--term-red);
+    border-color: var(--term-red);
+}
+
+.shortcut-btn.action.delete:active {
+    background: var(--term-red);
+    color: var(--bg-black);
+}
+
+/* CTRL Buttons */
+.shortcut-btn.ctrl {
+    background: var(--bg-active);
+    color: var(--term-yellow);
+    border-color: var(--term-yellow);
+    font-size: 0.75rem;
+    padding: 8px 10px;
+    min-width: 32px;
+}
+
+.shortcut-btn.ctrl:active {
+    background: var(--term-yellow);
+    color: var(--bg-black);
+}
+
+/* Navigation Buttons */
+.shortcut-btn.nav {
+    background: var(--bg-panel);
+    color: var(--term-blue);
+    border-color: var(--term-blue);
+}
+
+.shortcut-btn.nav:active {
+    background: var(--term-blue);
+    color: var(--bg-black);
+}
+
+/* Arrow Buttons */
+.shortcut-btn.arrow {
+    background: var(--bg-panel);
+    color: var(--term-blue);
+    border-color: var(--term-blue);
+    font-size: 0.9rem;
+    min-width: 34px;
+    padding: 8px;
+}
+
+.shortcut-btn.arrow:active {
+    background: var(--term-blue);
+    color: var(--bg-black);
+}
+
+/* Symbol Buttons */
+.shortcut-btn.symbol {
+    background: var(--bg-panel);
+    color: var(--term-purple);
+    border-color: transparent;
+    min-width: 30px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+}
+
+.shortcut-btn.symbol:active {
+    background: var(--term-purple);
+    color: var(--bg-black);
+}
+
+/* Bracket Buttons */
+.shortcut-btn.bracket {
+    background: var(--bg-panel);
+    color: var(--term-orange);
+    border-color: transparent;
+    min-width: 30px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+}
+
+.shortcut-btn.bracket:active {
+    background: var(--term-orange);
+    color: var(--bg-black);
+}
+
+/* ============================================
+   DRAWER MENU
+============================================ */
+.drawer-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    backdrop-filter: blur(2px);
+}
+
+.drawer-overlay.active {
+    display: block;
+}
+
+.termux-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 85%;
+    max-width: 320px;
+    height: 100%;
+    background: var(--bg-dark);
+    border-right: 1px solid var(--border-color);
+    z-index: 101;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
+}
+
+.termux-drawer.open {
+    transform: translateX(0);
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-panel);
+}
+
+.drawer-title {
+    color: var(--term-green);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.drawer-close {
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.15s;
+}
+
+.drawer-close:hover {
+    border-color: var(--term-red);
+    color: var(--term-red);
+}
+
+/* Drawer Sections */
+.drawer-section {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--term-gray);
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.section-title .icon {
+    font-size: 1rem;
+}
+
+/* Upload Zone */
+.upload-zone {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--bg-input);
+}
+
+.upload-zone:hover, .upload-zone.dragover {
+    border-color: var(--term-green);
+    background: rgba(80, 250, 123, 0.05);
+}
+
+.upload-zone:active {
+    background: rgba(80, 250, 123, 0.1);
+}
+
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+}
+
+.upload-icon {
+    font-size: 2rem;
+    color: var(--term-green);
+}
+
+.upload-progress {
+    margin-top: 12px;
+}
+
+.upload-progress.hidden {
+    display: none;
+}
+
+.progress-bar {
+    height: 6px;
+    background: var(--bg-panel);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--term-green);
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.progress-text {
+    font-size: 0.75rem;
+    color: var(--term-green);
+}
+
+.progress-text.error {
+    color: var(--term-red);
+}
+
+.progress-text.success {
+    color: var(--term-green);
+}
+
+.remote-path-input {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.remote-path-input.hidden {
+    display: none;
+}
+
+.remote-path-input input {
+    padding: 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.remote-path-input input:focus {
+    outline: none;
+    border-color: var(--term-green);
+}
+
+.termux-btn-small {
+    padding: 12px 16px;
+    background: var(--term-green);
+    border: none;
+    border-radius: 6px;
+    color: var(--bg-black);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.termux-btn-small:hover {
+    background: #6dff96;
+}
+
+.termux-btn-small:active {
+    transform: scale(0.98);
+}
+
+/* Quick Commands Grid */
+.quick-cmd-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.quick-cmd {
+    padding: 10px 8px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--term-blue);
+    font-family: inherit;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.quick-cmd:hover {
+    border-color: var(--term-blue);
+    background: var(--bg-hover);
+}
+
+.quick-cmd:active {
+    background: var(--term-blue);
+    color: var(--bg-black);
+    transform: scale(0.95);
+}
+
+/* Session Actions */
+.session-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.session-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.session-action-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--term-green);
+}
+
+.session-action-btn:active {
+    background: var(--bg-active);
+}
+
+.session-action-btn.danger {
+    border-color: transparent;
+}
+
+.session-action-btn.danger:hover {
+    border-color: var(--term-red);
+    color: var(--term-red);
+}
+
+.session-action-btn .icon {
+    font-size: 1rem;
+}
+
+/* ============================================
+   TOAST NOTIFICATIONS
+============================================ */
+.termux-toast {
+    position: fixed;
+    bottom: 140px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    z-index: 200;
+    opacity: 0;
+    transition: all 0.3s ease;
+    max-width: 90%;
+    text-align: center;
+}
+
+.termux-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.termux-toast.success {
+    border-color: var(--term-green);
+    color: var(--term-green);
+}
+
+.termux-toast.error {
+    border-color: var(--term-red);
+    color: var(--term-red);
+}
+
+.termux-toast.info {
+    border-color: var(--term-blue);
+    color: var(--term-blue);
+}
+
+/* ============================================
+   LOADING SPINNER
+============================================ */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   UTILITY CLASSES
+============================================ */
+.hidden {
+    display: none !important;
+}
+
+/* Desktop adjustments */
+@media (min-width: 768px) {
+    .termux-login {
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+    }
+
+    .login-form-container {
+        max-width: 450px;
+        width: 100%;
+    }
+
+    .saved-sessions {
+        max-width: 450px;
+        width: 100%;
+    }
+
+    .ascii-art {
+        font-size: 0.75rem;
+    }
+
+    .termux-shortcuts {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .shortcuts-row {
+        justify-content: center;
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .shortcut-btn {
+        padding: 12px 16px;
+        font-size: 0.8rem;
+    }
+
+    .shortcut-btn.ctrl {
+        font-size: 0.75rem;
+    }
+}
+
+/* Large desktop */
+@media (min-width: 1024px) {
+    .termux-drawer {
+        width: 350px;
+    }
+
+    .quick-cmd-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+    .shortcut-btn {
+        padding: 8px 10px;
+        min-width: 38px;
+        font-size: 0.65rem;
+    }
+
+    .shortcut-btn.ctrl {
+        font-size: 0.6rem;
+        padding: 8px 6px;
+    }
+
+    .shortcut-btn.arrow {
+        min-width: 32px;
+        padding: 8px;
+    }
+
+    .shortcut-btn.symbol {
+        min-width: 30px;
+        padding: 6px 8px;
+    }
+
+    .quick-cmd-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ascii-art {
+        font-size: 0.4rem;
+    }
+}
+
+/* Landscape mode */
+@media (max-height: 500px) and (orientation: landscape) {
+    .termux-welcome {
+        padding: 10px 16px;
+    }
+
+    .ascii-art {
+        display: none;
+    }
+
+    .termux-shortcuts {
+        padding: 4px 8px;
+    }
+
+    .shortcuts-row {
+        padding: 2px 0;
+    }
+
+    .shortcut-btn {
+        padding: 6px 10px;
+    }
+
+    .shortcuts-row.primary {
+        padding-bottom: 4px;
+        margin-bottom: 2px;
+    }
+}
