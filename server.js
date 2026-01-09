@@ -121,6 +121,9 @@ io.on('connection', (socket) => {
         
         // Connect with password authentication
         console.log('Attempting SSH connection to', config.host, 'port', config.port || 22);
+        console.log('Using username:', config.username);
+        console.log('Password length:', config.password ? config.password.length : 0);
+        console.log('Password first 2 chars:', config.password ? config.password.substring(0, 2) + '***' : 'EMPTY');
         sshClient.connect({
             host: config.host,
             port: config.port || 22,
