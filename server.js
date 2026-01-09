@@ -23,6 +23,14 @@ const VPS_CONFIG = {
     password: process.env.VPS_PASSWORD || ''
 };
 
+// Debug: Log config on startup (mask password)
+console.log('VPS Config loaded:', {
+    host: VPS_CONFIG.host,
+    port: VPS_CONFIG.port,
+    username: VPS_CONFIG.username,
+    password: VPS_CONFIG.password ? '***SET***' : '***EMPTY***'
+});
+
 // Middleware
 app.use(express.static('public'));
 app.use(express.json());
